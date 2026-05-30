@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>子午声 · 新客引导</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;max-width:500px;margin:0 auto;padding:20px;color:#333;background:#fafaf5;font-size:15px;line-height:1.8}
+  h1{text-align:center;font-size:22px;color:#5b7a5e;margin-bottom:4px}
+  .sub{text-align:center;font-size:13px;color:#999;margin-bottom:24px}
+  .hero{text-align:center;padding:20px;background:linear-gradient(135deg,#e8f0e8,#f0f0e8);border-radius:14px;margin-bottom:20px}
+  .hero h2{font-size:18px;color:#5b7a5e;margin-bottom:6px}
+  .hero p{font-size:13px;color:#888}
+  .section{margin-bottom:20px}
+  .section h3{font-size:15px;color:#5b7a5e;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;justify-content:center}
+  .flow-step{background:#fff;border:1.5px solid #d8e8d8;border-radius:10px;padding:10px 14px;text-align:center;font-size:12px;min-width:70px}
+  .flow-step .icon{font-size:22px;margin-bottom:4px}
+  .flow-arrow{color:#5b7a5e;font-size:18px;line-height:54px}
+  .pricing{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .price-card{background:#fff;border-radius:10px;padding:14px;text-align:center;border:2px solid #e0e0e0}
+  .price-card.recommend{border-color:#5b7a5e;background:#f8faf8}
+  .price-name{font-weight:700;font-size:14px;margin-bottom:4px}
+  .price-amount{font-size:24px;font-weight:700;color:#5b7a5e;margin:6px 0}
+  .price-desc{font-size:11px;color:#999;line-height:1.4}
+  .price-badge{display:inline-block;background:#5b7a5e;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;margin-bottom:4px}
+  .faq{margin:6px 0}
+  .faq-q{font-weight:600;font-size:14px;color:#555;cursor:pointer;padding:8px 0}
+  .faq-a{font-size:13px;color:#888;padding:0 0 8px 0;display:none}
+  .faq-a.show{display:block}
+  .btn{display:block;width:100%;padding:14px;background:#5b7a5e;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:8px 0;text-align:center;text-decoration:none}
+  .btn-outline{background:#fff;color:#5b7a5e;border:2px solid #5b7a5e}
+  .note{background:#fff8f0;border-left:3px solid #e8a84a;padding:10px 14px;margin:10px 0;font-size:12px;border-radius:0 8px 8px 0}
+  .warn{background:#fff0f0;border-left:3px solid #e87474;padding:10px 14px;margin:10px 0;font-size:12px;border-radius:0 8px 8px 0}
+</style>
+</head>
+<body>
+
+<h1>子午声</h1>
+<p class="sub">从古籍里走来的声音养护</p>
+
+<div class="hero">
+  <h2>不是医疗，是陪伴</h2>
+  <p>读古籍，配声音，记录感受。一个普通人的探索分享。</p>
+</div>
+
+<div class="section">
+  <h3>🔁 服务流程</h3>
+  <div class="flow">
+    <div class="flow-step"><div class="icon">📋</div>填写调研表</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="icon">🔍</div>分析诊断<br><span style="font-size:10px;color:#999">2-3天</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="icon">💳</div>确认付费</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="icon">🎵</div>定制音频<br><span style="font-size:10px;color:#999">2-3天</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="icon">📊</div>四周跟踪<br><span style="font-size:10px;color:#999">调3次</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>💳 服务与价格</h3>
+  <div class="pricing">
+    <div class="price-card">
+      <div class="price-name">初评咨询</div>
+      <div class="price-amount">¥68</div>
+      <div class="price-desc">体质分析+初步建议<br>不含音频</div>
+    </div>
+    <div class="price-card recommend">
+      <div class="price-badge">推荐</div>
+      <div class="price-name">四周调理</div>
+      <div class="price-amount">¥998</div>
+      <div class="price-desc">诊断报告+4版定制音频<br>+使用方案+四周跟踪<br>+2次频率调整</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>❓ 常见问题</h3>
+  <div class="faq"><div class="faq-q" onclick="this.nextElementSibling.classList.toggle('show')">这有副作用吗？ ▾</div><div class="faq-a">声音调理属于非侵入式辅助方式。正常使用无副作用。孕妇、心脏起搏器使用者不适合。如有不适随时停止。</div></div>
+  <div class="faq"><div class="faq-q" onclick="this.nextElementSibling.classList.toggle('show')">多久能看到效果？ ▾</div><div class="faq-a">因人而异。有人3-5天有感觉，有人需要2周。这和针灸类似——体质不同反应不同。重要的是坚持记录。</div></div>
+  <div class="faq"><div class="faq-q" onclick="this.nextElementSibling.classList.toggle('show')">能替代药物吗？ ▾</div><div class="faq-a">不能。这是辅助调理，不能替代任何医生处方的药物或治疗。请在医生指导下使用。</div></div>
+  <div class="faq"><div class="faq-q" onclick="this.nextElementSibling.classList.toggle('show')">怎么听？一次多久？ ▾</div><div class="faq-a">每天1-2次，每次15分钟。手机外放或耳机均可。具体时段和配合穴位见使用方案。</div></div>
+</div>
+
+<div class="warn">
+  <b>⚠ 重要声明：</b>子午声提供的是基于传统典籍的辅助调理服务，不宣称具有医疗效果，不能替代医生的诊断和治疗。如有疾病请及时就医。使用前请阅读并签署服务协议。
+</div>
+
+<a class="btn" href="https://ziwusheng.netlify.app/">📋 开始填写调研表</a>
+<a class="btn btn-outline" href="about.html">👤 关于子午声</a>
+
+</body></html>

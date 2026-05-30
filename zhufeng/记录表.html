@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>使用记录 - 李珠峰</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;max-width:500px;margin:0 auto;padding:16px;color:#333;background:#f8f8f5;font-size:15px}
+  h1{text-align:center;font-size:18px;color:#6b6b8a;margin-bottom:2px}
+  .sub{text-align:center;font-size:12px;color:#999;margin-bottom:14px}
+  .day-card{background:#fff;border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+  .day-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .day-header input{width:90px;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:14px;text-align:center}
+  .day-header .day-label{font-weight:600;color:#6b6b8a;font-size:14px}
+  .day-body{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .day-body label{font-size:11px;color:#999;display:block;margin-bottom:2px}
+  .day-body input,.day-body select{width:100%;border:1px solid #ddd;border-radius:6px;padding:8px 6px;font-size:14px;background:#fafafa;-webkit-appearance:none}
+  .day-body input:focus,.day-body select:focus{outline:none;border-color:#6b6b8a;background:#fff}
+  .btn{display:block;width:100%;padding:14px;background:#6b6b8a;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:16px 0 8px}
+  .btn:active{opacity:.8}
+  .saved{text-align:center;color:#6b6b8a;font-size:13px;min-height:20px}
+  .tab-bar{display:flex;gap:4px;margin-bottom:12px}
+  .tab-bar button{flex:1;padding:10px;border:1.5px solid #ddd;border-radius:8px;background:#fff;font-size:13px;cursor:pointer}
+  .tab-bar button.on{background:#6b6b8a;color:#fff;border-color:#6b6b8a}
+  .page{display:none}
+  .page.on{display:block}
+  .week-summary{background:#f8f8fa;border-radius:10px;padding:12px;margin:12px 0;border:1px solid #d5d5e5}
+  .week-summary h3{font-size:14px;color:#6b6b8a;margin-bottom:8px}
+  .week-summary .row{display:flex;gap:6px;align-items:center;margin:4px 0}
+  .week-summary label{font-size:12px;color:#888;min-width:55px}
+  .week-summary input,.week-summary select{border:1px solid #ddd;border-radius:6px;padding:7px;font-size:13px;background:#fff}
+</style>
+</head>
+<body>
+
+<h1>使用记录表</h1>
+<p class="sub">李珠峰 · 疼痛+面瘫 · 每日2次</p>
+
+<div class="tab-bar">
+  <button class="on" onclick="showTab('daily')">📅 每日</button>
+  <button onclick="showTab('exercise')">💪 锻炼</button>
+  <button onclick="showTab('weekly')">📊 评估</button>
+</div>
+
+<div id="daily" class="page on">
+  <script>
+  let today=new Date();
+  for(let d=0;d<7;d++){
+    let dt=new Date(today);dt.setDate(today.getDate()-d);
+    let ds=`${dt.getMonth()+1}/${dt.getDate()}`;
+    let dd=d;
+    document.write(`<div class="day-card">
+      <div class="day-header"><span class="day-label">📅 第 ${d+1} 天</span><input id="d${dd}_date" type="text" value="${ds}"></div>
+      <div class="day-body">
+        <div><label>时段</label><select id="d${dd}_time"><option>早</option><option>晚</option></select></div>
+        <div><label>疼痛(0-10)</label><input id="d${dd}_pain" type="text"></div>
+        <div><label>紧绷感</label><select id="d${dd}_tight"><option></option><option>无</option><option>轻</option><option>中</option><option>重</option></select></div>
+        <div><label>抽动</label><select id="d${dd}_twitch"><option></option><option>无</option><option>偶尔</option><option>经常</option></select></div>
+        <div><label>鼓气</label><select id="d${dd}_guqi"><option></option><option>好</option><option>一般</option><option>差</option></select></div>
+        <div><label>睡眠</label><select id="d${dd}_sleep"><option></option><option>好</option><option>一般</option><option>差</option></select></div>
+        <div style="grid-column:1/-1"><label>备注</label><input id="d${dd}_note" type="text" style="width:100%"></div>
+      </div>
+    </div>`);
+  }
+  </script>
+</div>
+
+<div id="exercise" class="page">
+  <script>
+  for(let d=0;d<7;d++){
+    let dd=d;
+    document.write(`<div class="day-card">
+      <div class="day-header"><span class="day-label">💪 第 ${d+1} 天</span><input id="ex${dd}_date" type="text" placeholder="日期"></div>
+      <div class="day-body">
+        <div><label>鼓气10次</label><select id="ex${dd}_gq"><option>□</option><option>✅</option></select></div>
+        <div><label>抬眉10次</label><select id="ex${dd}_tm"><option>□</option><option>✅</option></select></div>
+        <div><label>闭眼10次</label><select id="ex${dd}_by"><option>□</option><option>✅</option></select></div>
+        <div><label>微笑10次</label><select id="ex${dd}_wx"><option>□</option><option>✅</option></select></div>
+      </div>
+    </div>`);
+  }
+  </script>
+</div>
+
+<div id="weekly" class="page">
+  <div class="week-summary"><h3>📊 周评估</h3>
+    <div class="row"><label>平均疼痛</label><input id="w_pain" type="text" size="4" placeholder="/10"><label>改善</label><select id="w_improve"><option></option><option>无</option><option>轻微</option><option>明显</option></select></div>
+    <div class="row"><label>鼓气</label><select id="w_gq"><option></option><option>改善</option><option>不变</option></select><label>抽动</label><select id="w_tw"><option></option><option>减少</option><option>不变</option><option>增多</option></select></div>
+  </div>
+  <div class="week-summary"><h3>📊 月度总评</h3>
+    <div class="row"><label>疼痛</label><input id="m_pain1" type="text" size="4">→<input id="m_pain2" type="text" size="4"></div>
+    <div class="row"><label>鼓气</label><select id="m_gq"><option></option><option>明显改善</option><option>轻微改善</option><option>无变化</option></select></div>
+    <div class="row"><label>抽动</label><select id="m_tw"><option></option><option>明显减少</option><option>轻微减少</option><option>无变化</option></select></div>
+    <div class="row"><label>满意</label><select id="m_sat"><option></option><option>很满意</option><option>满意</option><option>一般</option></select></div>
+  </div>
+</div>
+
+<button class="btn" onclick="saveForm()">✅ 保存记录</button>
+<p class="saved" id="msg"></p>
+
+<script>
+function showTab(t){document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('on'));event.target.classList.add('on');document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.getElementById(t).classList.add('on')}
+document.addEventListener('input',saveDraft);document.addEventListener('change',saveDraft);
+function getFormData(){let d={};document.querySelectorAll('input[type="text"],select').forEach(el=>{if(el.id)d[el.id]=el.value});d._t=new Date().toLocaleString();return d}
+function saveDraft(){try{localStorage.setItem('track_珠峰',JSON.stringify(getFormData()))}catch(e){}}
+function loadDraft(){try{let d=JSON.parse(localStorage.getItem('track_珠峰'));if(!d)return;for(let k in d){if(k.startsWith('_'))continue;let el=document.getElementById(k);if(el)el.value=d[k]||''}document.getElementById('msg').textContent='📝 已恢复上次记录'}catch(e){}}
+function saveForm(){let d=getFormData();let n=new Date();let ds=`${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}`;let h=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>记录 - 李珠峰 ${ds}</title><style>body{font-family:"PingFang SC",sans-serif;max-width:500px;margin:16px auto;font-size:14px;color:#333;line-height:1.8}h1{font-size:18px;color:#6b6b8a}td{padding:4px 8px;border-bottom:1px solid #eee}td:first-child{color:#999;white-space:nowrap}</style></head><body><h1>记录 - 李珠峰</h1><p style="color:#999;font-size:12px">${d._t}</p><table>${Object.entries(d).filter(([k])=>!k.startsWith('_')&&d[k].trim()).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table></body></html>`;let b=new Blob([h],{type:'text/html'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download=`使用记录_李珠峰_${ds}.html`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);document.getElementById('msg').textContent='✅ 已保存！';localStorage.removeItem('track_珠峰')}
+loadDraft();
+</script>
+</body></html>
