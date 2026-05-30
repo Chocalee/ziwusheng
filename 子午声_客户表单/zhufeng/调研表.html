@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>个人情况 - 李珠峰</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;max-width:500px;margin:0 auto;padding:16px;color:#333;background:#f8f8f5;font-size:15px;line-height:1.7}
+  h1{text-align:center;font-size:18px;color:#6b6b8a;margin-bottom:2px}
+  .sub{text-align:center;font-size:12px;color:#999;margin-bottom:16px}
+  .card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+  .card h2{font-size:15px;color:#6b6b8a;margin-bottom:10px;padding-bottom:4px;border-bottom:1.5px solid #eeeef5}
+  .row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;align-items:center}
+  .row label{font-size:13px;color:#888;min-width:55px}
+  .row input,.row select{flex:1;min-width:80px;border:1px solid #ddd;border-radius:6px;padding:10px 8px;font-size:15px;background:#fafafa;-webkit-appearance:none}
+  .row input:focus,.row select:focus{outline:none;border-color:#6b6b8a;background:#fff}
+  input.full{width:100%;display:block;margin:6px 0}
+  textarea{width:100%;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:15px;min-height:60px;background:#fafafa;font-family:inherit}
+  textarea:focus{outline:none;border-color:#6b6b8a;background:#fff}
+  .tag-group{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+  .tag{display:inline-block;padding:6px 14px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;cursor:pointer;user-select:none;transition:all .15s}
+  .tag.on{background:#6b6b8a;color:#fff;border-color:#6b6b8a}
+  .btn{display:block;width:100%;padding:14px;background:#6b6b8a;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:16px 0 8px}
+  .btn:active{opacity:.8}
+  .saved{text-align:center;color:#6b6b8a;font-size:13px;min-height:20px}
+</style>
+</head>
+<body>
+
+<h1>个人情况了解表</h1>
+<p class="sub">李珠峰 · 三叉神经痛+面瘫 · 请如实填写</p>
+
+<div class="card"><h2>基本信息</h2>
+  <div class="row"><label>性别</label><select id="sex"><option></option><option>男</option><option>女</option></select><label>年龄</label><input id="age" type="text" placeholder="岁"></div>
+  <div class="row"><label>身高</label><input id="height" type="text" placeholder="cm"><label>体重</label><input id="weight" type="text" placeholder="kg"><label>血型</label><select id="blood"><option></option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+</div>
+
+<div class="card" style="border-left:3px solid #e74c3c"><h2>三叉神经痛 ⭐</h2>
+  <div class="row"><label>病史</label><input id="tn_years" type="text" placeholder="年"><label>哪侧</label><select id="tn_side"><option></option><option>右侧</option><option>左侧</option><option>双侧</option></select></div>
+  <div class="tag-group" id="tn_type"><span class="tag" data-v="刺痛">刺痛</span><span class="tag" data-v="电击痛">电击痛</span><span class="tag" data-v="灼烧痛">灼烧痛</span><span class="tag" data-v="钝痛">钝痛</span></div>
+  <div class="row"><label>平时</label><input id="tn_usual" type="text" placeholder="0-10分"><label>发作时</label><input id="tn_attack" type="text" placeholder="0-10分"></div>
+  <div class="row"><label>频率</label><input id="tn_freq" type="text" placeholder="每天几次"><label>持续</label><input id="tn_dur" type="text" placeholder="每次多久"></div>
+  <div class="tag-group" id="tn_trigger"><span class="tag" data-v="洗脸">洗脸</span><span class="tag" data-v="刷牙">刷牙</span><span class="tag" data-v="吃饭">吃饭</span><span class="tag" data-v="说话">说话</span><span class="tag" data-v="风吹">风吹</span></div>
+  <textarea id="tn_meds" placeholder="目前在用什么止痛药？"></textarea>
+</div>
+
+<div class="card"><h2>面瘫后遗症</h2>
+  <div class="row"><label>面瘫</label><input id="fp_years" type="text" placeholder="多少年了"><label>原因</label><select id="fp_cause"><option></option><option>受凉</option><option>中风</option><option>感染</option><option>外伤</option><option>不明</option></select></div>
+  <div class="row"><label>鼓气</label><select id="fp_guqi"><option></option><option>能完成</option><option>漏气</option><option>完全不能</option></select><label>闭眼</label><select id="fp_biyan"><option></option><option>能完成</option><option>不完全</option><option>露白</option></select></div>
+  <div class="row"><label>抬眉</label><select id="fp_taimei"><option></option><option>正常</option><option>减弱</option><option>不能</option></select></div>
+  <div class="row"><label>抽动</label><select id="fp_twitch"><option></option><option>无</option><option>偶尔</option><option>经常</option></select><input id="fp_twitch_where" type="text" placeholder="部位"></div>
+  <textarea id="fp_treatment" placeholder="做过什么治疗？"></textarea>
+</div>
+
+<div class="card"><h2>睡眠与情绪</h2>
+  <div class="row"><label>睡眠</label><input id="sleep_h" type="text" placeholder="小时/晚"><label>入睡</label><select id="sleep_easy"><option></option><option>容易</option><option>困难</option></select></div>
+  <div class="row"><label>夜醒</label><input id="sleep_wake" type="text" placeholder="次"><label>疼痛影响</label><select id="sleep_pain"><option></option><option>不影响</option><option>偶尔</option><option>经常</option><option>每晚</option></select></div>
+  <div class="tag-group" id="mood"><span class="tag" data-v="平静">平静</span><span class="tag" data-v="焦虑">焦虑</span><span class="tag" data-v="低落">低落</span><span class="tag" data-v="烦躁">烦躁</span></div>
+</div>
+
+<div class="card"><h2>生活习惯</h2>
+  <div class="tag-group" id="habits"><span class="tag" data-v="怕冷">怕冷</span><span class="tag" data-v="怕风">怕风</span><span class="tag" data-v="吸烟">吸烟</span><span class="tag" data-v="饮酒">饮酒</span></div>
+  <div class="row"><label>饮食</label><select id="diet"><option></option><option>偏辣</option><option>偏淡</option><option>偏油</option><option>正常</option></select><label>喝水</label><input id="water" type="text" placeholder="ml/天"></div>
+  <div class="row"><label>运动</label><select id="exercise"><option></option><option>从不</option><option>偶尔</option><option>经常</option></select></div>
+</div>
+
+<div class="card"><h2>其他</h2>
+  <textarea id="other_meds" placeholder="目前吃的所有药"></textarea>
+  <div class="row"><label>其他病史</label><input id="other_dz" type="text" placeholder="高血压/糖尿病等"><label>过敏</label><input id="allergy" type="text"></div>
+  <div class="tag-group" id="goals"><span class="tag" data-v="疼痛">疼痛</span><span class="tag" data-v="抽动">抽动</span><span class="tag" data-v="鼓气">鼓气</span><span class="tag" data-v="闭眼">闭眼</span><span class="tag" data-v="睡眠">睡眠</span><span class="tag" data-v="情绪">情绪</span></div>
+</div>
+
+<div class="card" id="attachCard">
+  <h2>📎 上传附件（化验单、检查报告等）</h2>
+  <p style="font-size:12px;color:#999;margin-bottom:8px">支持图片、PDF、Word、Excel，可多选</p>
+  <input type="file" id="fileInput" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" multiple style="display:none" onchange="addFiles(this.files)">
+  <button type="button" onclick="document.getElementById('fileInput').click()" style="width:100%;padding:12px;border:2px dashed #ccc;border-radius:8px;background:#fafafa;font-size:14px;color:#888;cursor:pointer">+ 选择文件</button>
+  <div id="fileList" style="margin-top:8px"></div>
+</div>
+
+<div class="card" style="border-left:3px solid #5b7a5e">
+  <h2>📄 服务协议确认</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:8px">我已阅读并同意<a href="https://ziwusheng.netlify.app/服务协议.html" target="_blank" style="color:#5b7a5e">《服务协议与免责声明》</a>全部条款。</p>
+  <div class="tag-group" id="consent"><span class="tag" data-v="我同意服务协议全部条款">□ 我同意服务协议全部条款</span></div>
+  <p style="font-size:10px;color:#999;margin-top:4px">（勾选后填写本表即视为签署协议）</p>
+</div>
+
+<button class="btn"✅ 完成填写，保存为文件</button>
+<p class="saved" id="msg"></p>
+
+<script>
+document.querySelectorAll('.tag-group').forEach(g=>{g.addEventListener('click',e=>{if(e.target.classList.contains('tag')){e.target.classList.toggle('on');saveDraft()}})});
+document.addEventListener('input',saveDraft);document.addEventListener('change',saveDraft);
+
+let attachedFiles=[];
+function addFiles(f){
+  for(let fl of f){
+    if(fl.size>10*1024*1024){alert(fl.name+' 超过10MB，请压缩');continue}
+    let r=new FileReader();
+    r.onload=function(e){attachedFiles.push({name:fl.name,type:fl.type,size:fl.size,data:e.target.result});renderFiles();saveDraft()};
+    r.readAsDataURL(fl);
+  }
+  document.getElementById('fileInput').value='';
+}
+function renderFiles(){
+  let h='';attachedFiles.forEach((f,i)=>{let s=(f.size/1024).toFixed(0)+'KB';let ic=f.type.startsWith('image')?'🖼':f.type.includes('pdf')?'📄':'📎';h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px;margin:4px 0;background:#f8f8f8;border-radius:6px;font-size:12px"><span>${ic} ${f.name} (${s})</span><span onclick="attachedFiles.splice(${i},1);renderFiles();saveDraft()" style="color:#e74c3c;cursor:pointer;font-size:16px;padding:0 6px">×</span></div>`});document.getElementById('fileList').innerHTML=h;
+}
+function getFormData(){
+let d={};document.querySelectorAll('input[type="text"],textarea,select').forEach(el=>{if(el.id)d[el.id]=el.value});document.querySelectorAll('.tag-group').forEach(g=>{let v=[];g.querySelectorAll('.tag.on').forEach(t=>v.push(t.dataset.v));if(v.length)d[g.id]=v.join('、')});d._t=new Date().toLocaleString();d._c='李珠峰';return d}
+function saveDraft(){try{localStorage.setItem('form_珠峰',JSON.stringify(getFormData()))}catch(e){}}
+function loadDraft(){try{let d=JSON.parse(localStorage.getItem('form_珠峰'));if(!d){document.getElementById('msg').textContent='📋 模板文件 · 填写后保存';return}for(let k in d){if(k.startsWith('_'))continue;let el=document.getElementById(k);if(el&&(el.tagName==='SELECT'||el.tagName==='INPUT'||el.tagName==='TEXTAREA'))el.value=d[k]||'';if(d[k]&&d[k].includes('、')){let v=d[k].split('、');let g=document.getElementById(k);if(g)g.querySelectorAll('.tag').forEach(t=>{if(v.includes(t.dataset.v))t.classList.add('on')})}}document.getElementById('msg').textContent='📝 已恢复上次填写'}catch(e){}}
+function saveForm(){let d=getFormData();let n=new Date();let ds=`${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}`;let lb={sex:'性别',age:'年龄',height:'身高',weight:'体重',blood:'血型',tn_years:'三叉神经痛病史',tn_side:'患侧',tn_type:'疼痛性质',tn_usual:'平时疼痛',tn_attack:'发作时',tn_freq:'发作频率',tn_dur:'持续时间',tn_trigger:'诱发因素',tn_meds:'止痛药',fp_years:'面瘫病史',fp_cause:'原因',fp_guqi:'鼓气',fp_biyan:'闭眼',fp_taimei:'抬眉',fp_twitch:'抽动',fp_twitch_where:'抽动部位',fp_treatment:'做过治疗',sleep_h:'睡眠',sleep_easy:'入睡',sleep_wake:'夜醒',sleep_pain:'疼痛影响睡眠',mood:'情绪',habits:'习惯',diet:'饮食',water:'喝水',exercise:'运动',other_meds:'用药',other_dz:'其他病史',allergy:'过敏',goals:'希望改善'};let r=[];for(let k in lb){if(d[k]&&d[k].trim())r.push(`<tr><td style="color:#999;white-space:nowrap;vertical-align:top;padding-right:8px">${lb[k]}</td><td>${d[k]}</td></tr>`)}let h=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>个人情况 - 李珠峰 ${ds}</title><style>body{font-family:"PingFang SC",sans-serif;max-width:500px;margin:16px auto;font-size:14px;line-height:1.8;color:#333}h1{font-size:18px;color:#6b6b8a}table{width:100%;border-collapse:collapse}td{padding:6px 4px;border-bottom:1px solid #eee}</style></head><body><h1>个人情况 - 李珠峰</h1><p style="color:#999;font-size:12px">${d._t}</p><table>${r.join('')}</table><div style="margin-top:16px"><h2 style="font-size:15px;color:#7b5b4a">📎 附件</h2>${attachedFiles.length?attachedFiles.map((f,i)=>`<div style="margin:8px 0;padding:8px;background:#f8f8f8;border-radius:6px;font-size:12px">${f.type.startsWith("image")?`<img src="${f.data}" style="max-width:100%;border-radius:4px"><br>`:""}📎 ${f.name} (${(f.size/1024).toFixed(0)}KB)</div>`).join(""):"<p style=\"color:#999;font-size:12px\">无附件</p>"}</div></body></html>`;let b=new Blob([h],{type:'text/html'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download=`个人情况_李珠峰_已完成_${ds}.html`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);document.getElementById('msg').textContent='✅ 已保存！文件已下载';localStorage.removeItem('form_珠峰')}
+loadDraft();
+</script>
+</body></html>
