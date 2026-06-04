@@ -3,100 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>李华锋 · 周记录表 v3</title>
+<title>李华锋 · 周记录 v3</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,sans-serif;background:#f5f0eb;color:#3a3226;max-width:100vw;padding:10px;line-height:1.5;overflow-x:auto}
-h1{font-size:1.2em;color:#8b4513;text-align:center;margin:8px 0}
-.week-nav{display:flex;justify-content:space-between;align-items:center;margin:10px 0;gap:8px}
-.week-nav button{background:#8b4513;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:.85em;cursor:pointer}
-.week-nav span{font-weight:bold;color:#6b3a2a}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;font-size:.75em;table-layout:fixed}
-th{background:#e8d5c4;padding:8px 2px;text-align:center;color:#6b3a2a;font-weight:bold;position:sticky;top:0}
-td{padding:4px 1px;text-align:center;border-bottom:1px solid #f0e8dd}
-td:first-child{font-weight:bold;color:#8b4513;font-size:.8em}
-input,select{width:100%;border:1px solid #e0d5c5;border-radius:6px;padding:6px 2px;font-size:.8em;background:#fafaf5;text-align:center;min-width:0}
-input:focus,select:focus{outline:none;border-color:#8b4513}
-.btn-row{text-align:center;margin:14px 0}
-.btn{background:#8b4513;color:#fff;border:none;padding:12px 36px;font-size:1em;border-radius:10px;cursor:pointer}
-.footer{text-align:center;color:#b8a088;font-size:.7em;margin-top:10px}
+body{font-family:-apple-system,sans-serif;background:#f5f0eb;color:#3a3226;padding:10px;line-height:1.4}
+h1{font-size:1.1em;color:#8b4513;text-align:center;margin:6px 0}
+.nav{display:flex;justify-content:center;align-items:center;gap:10px;margin:8px 0}
+.nav button{background:#8b4513;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:.8em;cursor:pointer}
+.nav span{font-size:.85em;font-weight:bold;color:#6b3a2a;min-width:140px;text-align:center}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+table{border-collapse:collapse;background:#fff;border-radius:8px;font-size:.7em;min-width:580px;width:100%}
+th{background:#e8d5c4;padding:6px 3px;color:#6b3a2a;font-size:.85em;white-space:nowrap}
+td{padding:3px 2px;text-align:center;border-bottom:1px solid #f0e8dd}
+td:first-child{font-weight:bold;color:#8b4513;font-size:.75em;white-space:nowrap}
+input,select{width:100%;border:1px solid #e0d5c5;border-radius:5px;padding:7px 2px;font-size:.85em;background:#fafaf5;text-align:center}
+.btn-row{text-align:center;margin:12px 0}
+.btn{background:#8b4513;color:#fff;border:none;padding:12px 30px;font-size:.9em;border-radius:10px;cursor:pointer}
+.status{text-align:center;color:#6b8a5a;font-size:.75em;margin:4px 0}
+.tip{text-align:center;color:#a0886c;font-size:.65em;margin:6px 0}
 </style>
 </head>
 <body>
-<h1>周记录表 v3</h1>
-<div class="week-nav">
-<button onclick="prevWeek()">◀ 上周</button>
+<h1>周记录表</h1>
+<div class="nav">
+<button onclick="shift(-7)">◀</button>
 <span id="weekLabel"></span>
-<button onclick="nextWeek()">▶ 下周</button>
-<button onclick="goToday()">本周</button>
+<button onclick="shift(7)">▶</button>
 </div>
-
-<table id="table">
-<thead><tr><th>日期</th><th>疼痛<br>0-10</th><th>出汗</th><th>大便</th><th>睡眠<br>h</th><th>吗啡贴</th><th>备注</th></tr></thead>
+<div class="tip">← 左右滑动查看全部列 →</div>
+<div class="wrap">
+<table>
+<thead><tr><th>日期</th><th>疼痛0-10</th><th>出汗</th><th>大便</th><th>睡眠h</th><th>吗啡贴</th><th>备注</th></tr></thead>
 <tbody></tbody>
 </table>
-
+</div>
 <div class="btn-row"><button class="btn" onclick="save()">保存本周</button></div>
-<div class="footer" id="status"></div>
-
+<div class="status" id="status"></div>
 <script>
-const KEY='huafeng_week_logs';
+const KEY='hf_wk';
 let logs=JSON.parse(localStorage.getItem(KEY)||'{}');
-let currentMonday=getMonday(new Date());
+let mon=(()=>{const d=new Date();d.setHours(0,0,0,0);const day=d.getDay();d.setDate(d.getDate()-(day===0?6:day-1));return d.toISOString().slice(0,10);})();
 
-function getMonday(d){const dt=new Date(d);dt.setHours(0,0,0,0);const day=dt.getDay();const diff=dt.getDate()-day+(day===0?-6:1);dt.setDate(diff);return dt.toISOString().slice(0,10);}
+function label(){const d=new Date(mon);const s=new Date(mon);s.setDate(s.getDate()+6);return d.toISOString().slice(0,10)+' ~ '+s.toISOString().slice(0,10);}
 
-function weekLabel(){const d=new Date(currentMonday);const sun=new Date(d);sun.setDate(d.getDate()+6);return d.toISOString().slice(0,10)+' ~ '+sun.toISOString().slice(0,10);}
-
-function getDays(){
-  const days=[];
-  for(let i=0;i<7;i++){const d=new Date(currentMonday);d.setDate(d.getDate()+i);days.push(d.toISOString().slice(0,10));}
-  return days;
-}
+function days(){const a=[];for(let i=0;i<7;i++){const d=new Date(mon);d.setDate(d.getDate()+i);a.push(d.toISOString().slice(0,10));}return a;}
 
 function render(){
-  document.getElementById('weekLabel').textContent=weekLabel();
-  const days=getDays();
-  const weekData=logs[currentMonday]||{};
-  let tbody='';
-  days.forEach(date=>{
-    const d=weekData[date]||{};
-    const short=date.slice(5);
-    tbody+=`<tr>
-<td>${short}</td>
-<td><input id="p_${date}" type="number" min="0" max="10" value="${d.pain||''}" placeholder="-"></td>
-<td><select id="s_${date}"><option value="">-</option><option ${d.sweat==='无'?'selected':''}>无</option><option ${d.sweat==='轻微'?'selected':''}>轻微</option><option ${d.sweat==='湿透'?'selected':''}>湿透</option></select></td>
-<td><select id="b_${date}"><option value="">-</option><option ${d.stool==='无'?'selected':''}>无</option><option ${d.stool==='有'?'selected':''}>有</option></select></td>
-<td><input id="sl_${date}" type="text" value="${d.sleep||''}" placeholder="h"></td>
-<td><select id="m_${date}"><option value="">-</option><option ${d.morphine==='正常'?'selected':''}>正常</option><option ${d.morphine==='减量'?'selected':''}>减量</option><option ${d.morphine==='增补'?'selected':''}>增补</option></select></td>
-<td><input id="n_${date}" type="text" value="${d.note||''}" placeholder="..."></td>
-</tr>`;
+  document.getElementById('weekLabel').textContent=label();
+  const wd=logs[mon]||{};
+  let h='';
+  days().forEach(d=>{
+    const r=wd[d]||{};
+    h+=`<tr><td>${d.slice(5)}</td>
+<td><input id="p_${d}" type="number" min="0" max="10" value="${r.pain||''}" style="width:40px"></td>
+<td><select id="sw_${d}"><option value="">-</option><option ${r.sweat==='无'?'selected':''}>无</option><option ${r.sweat==='轻微'?'selected':''}>轻微</option><option ${r.sweat==='湿透'?'selected':''}>湿透</option></select></td>
+<td><select id="st_${d}"><option value="">-</option><option ${r.stool==='有'?'selected':''}>有</option><option ${r.stool==='无'?'selected':''}>无</option></select></td>
+<td><input id="sl_${d}" type="text" value="${r.sleep||''}" style="width:36px"></td>
+<td><select id="mo_${d}"><option value="">-</option><option ${r.morphine==='正常'?'selected':''}>正常</option><option ${r.morphine==='减量'?'selected':''}>减量</option><option ${r.morphine==='增补'?'selected':''}>增补</option></select></td>
+<td><input id="nt_${d}" type="text" value="${r.note||''}" style="width:60px"></td></tr>`;
   });
-  document.querySelector('tbody').innerHTML=tbody;
+  document.querySelector('tbody').innerHTML=h;
 }
 
 function save(){
-  const days=getDays();
-  const weekData={};
-  days.forEach(date=>{
-    weekData[date]={
-      pain:document.getElementById('p_'+date)?.value||'',
-      sweat:document.getElementById('s_'+date)?.value||'',
-      stool:document.getElementById('b_'+date)?.value||'',
-      sleep:document.getElementById('sl_'+date)?.value||'',
-      morphine:document.getElementById('m_'+date)?.value||'',
-      note:document.getElementById('n_'+date)?.value||''
-    };
-  });
-  logs[currentMonday]=weekData;
+  const wd={};
+  days().forEach(d=>{wd[d]={pain:document.getElementById('p_'+d)?.value||'',sweat:document.getElementById('sw_'+d)?.value||'',stool:document.getElementById('st_'+d)?.value||'',sleep:document.getElementById('sl_'+d)?.value||'',morphine:document.getElementById('mo_'+d)?.value||'',note:document.getElementById('nt_'+d)?.value||''};});
+  logs[mon]=wd;
   localStorage.setItem(KEY,JSON.stringify(logs));
-  document.getElementById('status').textContent='✓ 已保存 '+new Date().toLocaleTimeString();
+  document.getElementById('status').textContent='✓ 已保存';
 }
 
-function prevWeek(){const d=new Date(currentMonday);d.setDate(d.getDate()-7);currentMonday=d.toISOString().slice(0,10);render();}
-function nextWeek(){const d=new Date(currentMonday);d.setDate(d.getDate()+7);currentMonday=d.toISOString().slice(0,10);render();}
-function goToday(){currentMonday=getMonday(new Date());render();}
-
+function shift(n){const d=new Date(mon);d.setDate(d.getDate()+n);mon=d.toISOString().slice(0,10);render();}
 render();
 </script>
 </body>
