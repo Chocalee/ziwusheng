@@ -54,7 +54,7 @@ function render(){
   let h='';
   days().forEach(d=>{
     const r=wd[d]||{};
-    h+=`<tr><td>${d.slice(5)}</td>
+    h+=`<tr><td><input id="dt_${d}" type="text" value="${r.date||d.slice(5)}" style="width:52px"></td>
 <td><input id="p_${d}" type="number" min="0" max="10" value="${r.pain||''}" style="width:40px"></td>
 <td><select id="sw_${d}"><option value="">-</option><option ${r.sweat==='无'?'selected':''}>无</option><option ${r.sweat==='轻微'?'selected':''}>轻微</option><option ${r.sweat==='湿透'?'selected':''}>湿透</option></select></td>
 <td><select id="st_${d}"><option value="">-</option><option ${r.stool==='有'?'selected':''}>有</option><option ${r.stool==='无'?'selected':''}>无</option></select></td>
@@ -67,7 +67,7 @@ function render(){
 
 function save(){
   const wd={};
-  days().forEach(d=>{wd[d]={pain:document.getElementById('p_'+d)?.value||'',sweat:document.getElementById('sw_'+d)?.value||'',stool:document.getElementById('st_'+d)?.value||'',sleep:document.getElementById('sl_'+d)?.value||'',morphine:document.getElementById('mo_'+d)?.value||'',note:document.getElementById('nt_'+d)?.value||''};});
+  days().forEach(d=>{wd[d]={date:document.getElementById('dt_'+d)?.value||'',pain:document.getElementById('p_'+d)?.value||'',sweat:document.getElementById('sw_'+d)?.value||'',stool:document.getElementById('st_'+d)?.value||'',sleep:document.getElementById('sl_'+d)?.value||'',morphine:document.getElementById('mo_'+d)?.value||'',note:document.getElementById('nt_'+d)?.value||''};});
   logs[mon]=wd;
   localStorage.setItem(KEY,JSON.stringify(logs));
   document.getElementById('status').textContent='✓ 已保存';
