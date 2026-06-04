@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李华锋 · 每日记录 v3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#f5f0eb;color:#3a3226;max-width:500px;margin:0 auto;padding:20px;line-height:1.7}
+h1{font-size:1.3em;color:#8b4513;margin-bottom:5px}
+.sub{color:#a0886c;font-size:.85em;margin-bottom:20px}
+.row{background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.row label{font-size:.85em;color:#8b4513;min-width:60px;font-weight:bold}
+.row input,.row select{flex:1;border:1px solid #e0d5c5;border-radius:8px;padding:10px;font-size:1em;background:#fafaf5;color:#3a3226}
+.row input:focus,.row select:focus{outline:none;border-color:#8b4513}
+.save-bar{position:sticky;bottom:0;background:#f5f0eb;padding:12px 0;text-align:center}
+.btn{background:#8b4513;color:#fff;border:none;padding:14px 40px;font-size:1.1em;border-radius:10px;cursor:pointer}
+.btn:active{background:#6b3a2a}
+.history{margin-top:20px}
+.history h2{font-size:1em;color:#8b4513;margin-bottom:10px}
+.history table{width:100%;border-collapse:collapse;font-size:.8em;background:#fff;border-radius:8px;overflow:hidden}
+.history th{background:#e8d5c4;padding:8px;text-align:center;color:#6b3a2a}
+.history td{padding:6px;text-align:center;border-bottom:1px solid #f0e8dd}
+.legend{font-size:.75em;color:#a0886c;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>每日记录 v3</h1>
+<div class="sub">李华锋 · 直肠癌肝转移靶向方案</div>
+
+<div id="form">
+<div class="row"><label>日期</label><input type="date" id="date"></div>
+<div class="row"><label>疼痛</label><select id="pain"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span class="legend">0=不疼 10=最疼</span></div>
+<div class="row"><label>出汗</label><select id="sweat"><option value="">—</option><option>无</option><option>轻微</option><option>湿透</option></select></div>
+<div class="row"><label>大便</label><select id="stool"><option value="">—</option><option>无</option><option>有</option></select></div>
+<div class="row"><label>睡眠</label><input type="number" id="sleep" placeholder="小时" min="0" max="24" step="0.5"></div>
+<div class="row"><label>吗啡贴</label><select id="morphine"><option value="">—</option><option>正常</option><option>减量</option><option>增补</option></select></div>
+<div class="row"><label>备注</label><input type="text" id="note" placeholder="其他情况..."></div>
+
+<div class="save-bar">
+<button class="btn" onclick="save()">保存</button>
+</div>
+</div>
+
+<div class="history" id="history"></div>
+
+<script>
+const KEY='huafeng_v3_log';
+let logs=JSON.parse(localStorage.getItem(KEY)||'[]');
+
+function save(){
+  const d=document.getElementById('date').value;
+  if(!d)return alert('请选择日期');
+  const entry={
+    date:d,
+    pain:document.getElementById('pain').value,
+    sweat:document.getElementById('sweat').value,
+    stool:document.getElementById('stool').value,
+    sleep:document.getElementById('sleep').value,
+    morphine:document.getElementById('morphine').value,
+    note:document.getElementById('note').value
+  };
+  const idx=logs.findIndex(l=>l.date===d);
+  if(idx>=0)logs[idx]=entry;else logs.push(entry);
+  logs.sort((a,b)=>b.date.localeCompare(a.date));
+  localStorage.setItem(KEY,JSON.stringify(logs));
+  render();
+  alert('已保存');
+}
+
+function render(){
+  if(!logs.length){document.getElementById('history').innerHTML='';return;}
+  let h='<h2>历史记录</h2><table><tr><th>日期</th><th>疼痛</th><th>出汗</th><th>大便</th><th>睡眠</th><th>吗啡</th><th>备注</th></tr>';
+  logs.slice(0,30).forEach(l=>{
+    h+=`<tr><td>${l.date.slice(5)}</td><td>${l.pain}</td><td>${l.sweat}</td><td>${l.stool}</td><td>${l.sleep}h</td><td>${l.morphine}</td><td>${l.note||''}</td></tr>`;
+  });
+  h+='</table>';
+  document.getElementById('history').innerHTML=h;
+}
+
+document.getElementById('date').value=new Date().toISOString().slice(0,10);
+render();
+</script>
+</body>
+</html>
